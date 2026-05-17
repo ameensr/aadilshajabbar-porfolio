@@ -62,7 +62,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const basePath = process.env.NODE_ENV === 'production' ? '/aadilshajabbar-portfolio' : '';
+  const basePath = process.env.NODE_ENV === 'production' ? '/aadilshajabbar-porfolio' : '';
 
   return (
     <html lang="en" className={`${playfair.variable} ${dmsans.variable} ${dmmono.variable} scroll-smooth`}>
