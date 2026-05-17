@@ -9,7 +9,10 @@ export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
-  const basePath = process.env.NODE_ENV === "production" ? "/aadilshajabbar-porfolio" : "";
+  const basePath =
+    typeof window !== "undefined"
+      ? (window.location.pathname.includes("/aadilshajabbar-porfolio") ? "/aadilshajabbar-porfolio" : "")
+      : (process.env.GITHUB_ACTIONS === "true" ? "/aadilshajabbar-porfolio" : "");
 
   const navItems = [
     { label: "Profile", id: "about" },
