@@ -4,9 +4,13 @@ import React from "react";
 import { motion } from "framer-motion";
 import { MoveDown } from "lucide-react";
 
-export default function Hero() {
+interface HeroProps {
+  innovationsCount?: number;
+}
+
+export default function Hero({ innovationsCount = 5 }: HeroProps) {
   const stats = [
-    { value: 5, label: "Innovations" },
+    { value: innovationsCount, label: "Innovations" },
     { value: 2, label: "Products Sold" },
     { value: 3, label: "Yrs UAE Experience" },
   ];

@@ -26,9 +26,10 @@ export default function AdminModal({ isOpen, onClose, onAddProject }: AdminModal
   const [mainImageName, setMainImageName] = useState("");
   const [additionalImages, setAdditionalImages] = useState<string[]>([]);
   
-  // Validation State
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDragOverMain, setIsDragOverMain] = useState(false);
+  const [isDragOverMulti, setIsDragOverMulti] = useState(false);
 
   const mainFileInputRef = useRef<HTMLInputElement>(null);
   const multiFileInputRef = useRef<HTMLInputElement>(null);
@@ -43,46 +44,96 @@ export default function AdminModal({ isOpen, onClose, onAddProject }: AdminModal
     });
   };
 
+  const processMainImage = async (file: File) => {
+    if (file.size > 2 * 1024 * 1024) {
+      setErrors((prev) => ({ ...prev, mainImage: "Image must be under 2MB." }));
+      return;
+    }
+    try {
+      const base64 = await convertToBase64(file);
+      setMainImage(base64);
+      setMainImageName(file.name);
+      setErrors((prev) => {
+        const copy = { ...prev };
+        delete copy.mainImage;
+        return copy;
+      });
+    } catch (err) {
+      setErrors((prev) => ({ ...prev, mainImage: "Error reading image file." }));
+    }
+  };
+
   const handleMainImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        setErrors((prev) => ({ ...prev, mainImage: "Image must be under 2MB." }));
-        return;
-      }
+      await processMainImage(file);
+    }
+  };
+
+  const processMultiImages = async (files: FileList) => {
+    const converted: string[] = [];
+    const limit = Math.min(files.length, 5 - additionalImages.length);
+    
+    for (let i = 0; i < limit; i++) {
+      const file = files[i];
+      if (!file.type.startsWith("image/")) continue;
+      if (file.size > 2 * 1024 * 1024) continue;
       try {
         const base64 = await convertToBase64(file);
-        setMainImage(base64);
-        setMainImageName(file.name);
-        setErrors((prev) => {
-          const copy = { ...prev };
-          delete copy.mainImage;
-          return copy;
-        });
+        converted.push(base64);
       } catch (err) {
-        setErrors((prev) => ({ ...prev, mainImage: "Error reading image file." }));
+        console.error("Error reading file", err);
       }
     }
+    
+    setAdditionalImages((prev) => [...prev, ...converted]);
   };
 
   const handleMultiImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
-      const converted: string[] = [];
-      const limit = Math.min(files.length, 5 - additionalImages.length);
-      
-      for (let i = 0; i < limit; i++) {
-        const file = files[i];
-        if (file.size > 2 * 1024 * 1024) continue;
-        try {
-          const base64 = await convertToBase64(file);
-          converted.push(base64);
-        } catch (err) {
-          console.error("Error reading file", err);
-        }
-      }
-      
-      setAdditionalImages((prev) => [...prev, ...converted]);
+      await processMultiImages(files);
+    }
+  };
+
+  // Drag and Drop handlers
+  const handleDragOverMain = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOverMain(true);
+  };
+
+  const handleDragLeaveMain = () => {
+    setIsDragOverMain(false);
+  };
+
+  const handleDropMain = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOverMain(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      await processMainImage(file);
+    } else if (file) {
+      setErrors((prev) => ({ ...prev, mainImage: "Dropped file must be a valid image." }));
+    }
+  };
+
+  const handleDragOverMulti = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (additionalImages.length < 5) {
+      setIsDragOverMulti(true);
+    }
+  };
+
+  const handleDragLeaveMulti = () => {
+    setIsDragOverMulti(false);
+  };
+
+  const handleDropMulti = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOverMulti(false);
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      await processMultiImages(files);
     }
   };
 
@@ -215,7 +266,7 @@ export default function AdminModal({ isOpen, onClose, onAddProject }: AdminModal
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. DYNAMIC scoter"
+                    placeholder="e.g. DYNAMIC scooter"
                     className="w-full bg-nearblack border border-gold/20 focus:border-gold px-4 py-3 text-sm text-offwhite focus:outline-none transition-colors duration-300"
                   />
                   {errors.name && (
@@ -258,7 +309,7 @@ export default function AdminModal({ isOpen, onClose, onAddProject }: AdminModal
                     <option value="Commercially Sold">✓ Commercially Sold</option>
                     <option value="Prototype Built">⬡ Prototype Built</option>
                     <option value="In Development">◯ In Development</option>
-                    <option value="Concept">💡 Concept Concept</option>
+                    <option value="Concept">💡 Concept</option>
                   </select>
                 </div>
 
@@ -346,7 +397,14 @@ export default function AdminModal({ isOpen, onClose, onAddProject }: AdminModal
                   
                   <div
                     onClick={() => mainFileInputRef.current?.click()}
-                    className="border border-dashed border-gold/20 hover:border-gold/60 bg-nearblack/40 hover:bg-nearblack/70 p-6 text-center cursor-pointer transition-all duration-300 relative group min-h-[140px] flex flex-col justify-center items-center"
+                    onDragOver={handleDragOverMain}
+                    onDragLeave={handleDragLeaveMain}
+                    onDrop={handleDropMain}
+                    className={`border border-dashed p-6 text-center cursor-pointer transition-all duration-300 relative group min-h-[140px] flex flex-col justify-center items-center ${
+                      isDragOverMain
+                        ? "border-gold bg-gold/5 shadow-[0_0_15px_rgba(201,168,76,0.15)]"
+                        : "border-gold/20 hover:border-gold/60 bg-nearblack/40 hover:bg-nearblack/70"
+                    }`}
                   >
                     <input
                       type="file"
@@ -363,11 +421,11 @@ export default function AdminModal({ isOpen, onClose, onAddProject }: AdminModal
                           {mainImageName}
                         </span>
                         <span className="font-mono text-[8px] text-gold uppercase block">
-                          Click to Replace Cover
+                          Click or Drop to Replace Cover
                         </span>
                       </div>
                     ) : (
-                      <div className="space-y-2">
+                      <div className="space-y-2 animate-fade-up">
                         <Upload size={24} className="text-gold/40 group-hover:text-gold mx-auto transition-colors duration-300" />
                         <span className="font-sans text-xs text-offwhite/50 block">
                           Drag cover file or click to select
@@ -392,8 +450,21 @@ export default function AdminModal({ isOpen, onClose, onAddProject }: AdminModal
                   </label>
                   
                   <div
-                    onClick={() => multiFileInputRef.current?.click()}
-                    className="border border-dashed border-gold/20 hover:border-gold/60 bg-nearblack/40 hover:bg-nearblack/70 p-6 text-center cursor-pointer transition-all duration-300 relative group min-h-[140px] flex flex-col justify-center items-center"
+                    onClick={() => {
+                      if (additionalImages.length < 5) {
+                        multiFileInputRef.current?.click();
+                      }
+                    }}
+                    onDragOver={handleDragOverMulti}
+                    onDragLeave={handleDragLeaveMulti}
+                    onDrop={handleDropMulti}
+                    className={`border border-dashed p-6 text-center transition-all duration-300 relative group min-h-[140px] flex flex-col justify-center items-center ${
+                      additionalImages.length >= 5
+                        ? "border-emerald/30 bg-emerald/5 cursor-not-allowed"
+                        : isDragOverMulti
+                        ? "border-gold bg-gold/5 shadow-[0_0_15px_rgba(201,168,76,0.15)] cursor-pointer"
+                        : "border-gold/20 hover:border-gold/60 bg-nearblack/40 hover:bg-nearblack/70 cursor-pointer"
+                    }`}
                   >
                     <input
                       type="file"
@@ -413,7 +484,9 @@ export default function AdminModal({ isOpen, onClose, onAddProject }: AdminModal
                           : "Upload supplementary design schematics"}
                       </span>
                       <span className="font-mono text-[8px] text-offwhite/30 uppercase block">
-                        Limit: {5 - additionalImages.length} remaining slots
+                        {additionalImages.length >= 5
+                          ? "Maximum attachments reached"
+                          : `Drag files or click (Limit: ${5 - additionalImages.length} slots remaining)`}
                       </span>
                     </div>
                   </div>

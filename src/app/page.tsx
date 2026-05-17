@@ -127,7 +127,7 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <Hero />
+      <Hero innovationsCount={innovations.length} />
 
       {/* About Section */}
       <About />

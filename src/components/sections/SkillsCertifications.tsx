@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { BadgeCheck, Cpu, FolderGit2, Sparkles } from "lucide-react";
+import { BadgeCheck, Cpu, Sparkles } from "lucide-react";
 
 export default function SkillsCertifications() {
   const skillCategories = [

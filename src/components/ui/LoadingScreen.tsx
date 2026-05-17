@@ -4,9 +4,11 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function LoadingScreen() {
+  const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setMounted(true);
     // Check if the page has already been loaded in this session to prevent constant loading screens
     const hasLoaded = sessionStorage.getItem("portfolio-loaded");
     if (hasLoaded) {
@@ -14,13 +16,22 @@ export default function LoadingScreen() {
       return;
     }
 
+    // Lock page scrolling during active load
+    document.body.style.overflow = "hidden";
+
     const timer = setTimeout(() => {
       setLoading(false);
       sessionStorage.setItem("portfolio-loaded", "true");
+      document.body.style.overflow = "";
     }, 2200);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = "";
+    };
   }, []);
+
+  if (!mounted) return null;
 
   return (
     <AnimatePresence>
