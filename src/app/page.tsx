@@ -1,113 +1,196 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { Plus } from "lucide-react";
+import Navigation from "@/components/ui/Navigation";
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Innovations from "@/components/sections/Innovations";
+import Timeline from "@/components/sections/Timeline";
+import SkillsCertifications from "@/components/sections/SkillsCertifications";
+import Contact from "@/components/sections/Contact";
+import AdminModal from "@/components/admin/AdminModal";
+import ProjectDetailsModal from "@/components/ui/ProjectDetailsModal";
+import { Innovation } from "@/types";
+
+// Static Default Innovations
+const DEFAULT_INNOVATIONS: Innovation[] = [
+  {
+    id: "sanfoot",
+    ghostNumber: "01",
+    name: "SANFOOT | Multi-Mode Sanitizer Dispenser",
+    tagline: "Product Design · Manufacturing · Sensor Tech · Commercial Sale",
+    status: "Commercially Sold",
+    icon: "💧",
+    description:
+      "Designed and manufactured during COVID-19. Combined sensor-activated, manual, and advertisement display functions in a single unit. Taken from concept to commercial manufacture and market sale — fully independently managed.",
+    tags: ["Product Design", "Manufacturing", "Sensor Tech", "Commercial Sale"],
+  },
+  {
+    id: "trify",
+    ghostNumber: "02",
+    name: "TRIFY | Personal Self-Defence Tool",
+    tagline: "Safety Engineering · Ergonomics · Manufacturing · UAE Market",
+    status: "Commercially Sold",
+    icon: "🛡️",
+    description:
+      "A compact personal safety device designed for real-world use. Brought to full commercial manufacture and sale in the UAE. Required precision ergonomic design, safety compliance thinking, and end-to-end delivery management.",
+    tags: ["Safety Engineering", "Ergonomics", "Manufacturing", "UAE Market"],
+  },
+  {
+    id: "dynamic",
+    ghostNumber: "03",
+    name: "DYNAMIC | Energy-Regenerating Electric Scooter",
+    tagline: "Energy Systems · Electromechanical · Patent Filed · Prototype",
+    status: "Prototype Built",
+    icon: "⚡",
+    description:
+      "A treadmill-integrated electric scooter with kinetic energy regeneration — converting human movement into electricity. Working prototype developed. Patent Application No: 381521001. Reflects deep interest in energy efficiency systems.",
+    tags: ["Energy Systems", "Electromechanical", "Patent Filed", "Prototype"],
+  },
+  {
+    id: "ostov",
+    ghostNumber: "04",
+    name: "OSTOV | Waste-Oil Powered Cooking Stove",
+    tagline: "Thermal Systems · Kitchen Equipment · Waste Energy · Sustainability",
+    status: "Prototype Built",
+    icon: "🔥",
+    description:
+      "A professional cooking stove powered entirely by waste oil — converting industrial waste into usable cooking energy. Working prototype completed. Combines thermal systems, combustion engineering, and professional kitchen equipment design.",
+    tags: ["Thermal Systems", "Kitchen Equipment", "Waste Energy", "Sustainability"],
+  },
+  {
+    id: "dcarb",
+    ghostNumber: "05",
+    name: "D'CARB | Decarbonisation Through Algae",
+    tagline: "Sustainability · Carbon Capture · Green Engineering · R&D",
+    status: "In Development",
+    icon: "🌿",
+    description:
+      "An ongoing sustainability concept using algae-based systems for industrial carbon capture and decarbonisation. Reflects long-term commitment to green engineering and environmental responsibility in manufacturing.",
+    tags: ["Sustainability", "Carbon Capture", "Green Engineering", "R&D"],
+  },
+];
 
 export default function Home() {
+  const [innovations, setInnovations] = useState<Innovation[]>([]);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Innovation | null>(null);
+
+  // Load custom projects from localStorage
+  useEffect(() => {
+    // Initial load including both default static items and any localstorage items
+    const loadProjects = () => {
+      try {
+        const stored = localStorage.getItem("innovator-projects");
+        if (stored) {
+          const parsed: Innovation[] = JSON.parse(stored);
+          // Combine defaults and custom items
+          setInnovations([...DEFAULT_INNOVATIONS, ...parsed]);
+        } else {
+          setInnovations(DEFAULT_INNOVATIONS);
+        }
+      } catch (err) {
+        console.error("Error loading localStorage innovations", err);
+        setInnovations(DEFAULT_INNOVATIONS);
+      }
+    };
+
+    loadProjects();
+  }, []);
+
+  // Callback: Add dynamic project
+  const handleAddProject = (newProj: Innovation) => {
+    try {
+      const stored = localStorage.getItem("innovator-projects");
+      const currentStored: Innovation[] = stored ? JSON.parse(stored) : [];
+      
+      // Calculate ghost number based on total index
+      const totalCount = DEFAULT_INNOVATIONS.length + currentStored.length + 1;
+      const formattedGhost = totalCount < 10 ? `0${totalCount}` : `${totalCount}`;
+      
+      const configuredProj = { ...newProj, ghostNumber: formattedGhost };
+      
+      const newStoredList = [...currentStored, configuredProj];
+      localStorage.setItem("innovator-projects", JSON.stringify(newStoredList));
+      
+      // Update state
+      setInnovations([...DEFAULT_INNOVATIONS, ...newStoredList]);
+    } catch (err) {
+      console.error("Error adding project to localStorage", err);
+    }
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="relative min-h-screen bg-nearblack">
+      {/* Sticky Navigation Bar */}
+      <Navigation />
+
+      {/* Hero Section */}
+      <Hero />
+
+      {/* About Section */}
+      <About />
+
+      {/* Innovations Section */}
+      <Innovations
+        innovations={innovations}
+        onOpenAdmin={() => setIsAdminOpen(true)}
+        onSelectProject={(project) => setSelectedProject(project)}
+      />
+
+      {/* Timeline Section */}
+      <Timeline />
+
+      {/* Skills & Accreditations Section */}
+      <SkillsCertifications />
+
+      {/* Contact Section */}
+      <Contact />
+
+      {/* Full Screen Form Admin Modal */}
+      <AdminModal
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
+        onAddProject={handleAddProject}
+      />
+
+      {/* Project Specifications Details Modal */}
+      <ProjectDetailsModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
+
+      {/* Floating "+ Add Project" Button on bottom right */}
+      <button
+        onClick={() => setIsAdminOpen(true)}
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-1.5 px-4 py-3 bg-gold border border-gold hover:bg-transparent text-nearblack hover:text-gold font-mono text-[10px] tracking-wider uppercase font-bold transition-all duration-300 rounded-none shadow-[0_4px_20px_rgba(201,168,76,0.3)] hover:shadow-none"
+      >
+        <Plus size={14} />
+        Add Project
+      </button>
+
+      {/* Elegant Editorial Footer */}
+      <footer className="border-t border-gold/10 bg-navy-dark py-12 px-6 text-center text-offwhite/40">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="text-left">
+            <span className="font-serif text-sm font-bold text-offwhite italic block">
+              Aadil Sha Jabbar
+            </span>
+            <span className="font-mono text-[8px] uppercase tracking-widest block mt-1">
+              Mechanical Engineer · Product Innovator
+            </span>
+          </div>
+
+          <p className="font-mono text-[9px] uppercase tracking-widest">
+            Designed with luxury editorial precision · Built with Next.js & Framer Motion
+          </p>
+
+          <span className="font-mono text-[9px] uppercase tracking-widest">
+            © {new Date().getFullYear()} · Sharjah, UAE
+          </span>
         </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      </footer>
     </main>
   );
 }
