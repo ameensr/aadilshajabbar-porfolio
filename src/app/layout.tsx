@@ -65,7 +65,7 @@ export default function RootLayout({
   const basePath = process.env.GITHUB_ACTIONS === 'true' ? '/aadilshajabbar-porfolio' : '';
 
   return (
-    <html lang="en" className={`${playfair.variable} ${dmsans.variable} ${dmmono.variable} scroll-smooth`}>
+    <html lang="en" className={`${playfair.variable} ${dmsans.variable} ${dmmono.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <link rel="icon" href={`${basePath}/favicon.ico`} sizes="any" />
         <script

@@ -14,6 +14,12 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    "theme-light",
+    "theme-dark",
+    "theme-slate",
+    "theme-aurora",
+  ],
   theme: {
     extend: {
       colors: {

@@ -9,9 +9,12 @@
     --color-accent: 201, 168, 76;
     --color-text: 245, 242, 237;
   }
+}
+
+  /* Theme Definitions (Declared outside @layer base to bypass Tailwind purging) */
 
   /* Deep Obsidian (Default Dark Theme) */
-  :root, .theme-dark {
+  :root, html.theme-dark {
     --color-nearblack: 10, 10, 10;
     --color-offwhite: 245, 242, 237;
     --color-gold: 201, 168, 76;
@@ -28,7 +31,7 @@
   }
 
   /* Warm Luxury (Light Theme) */
-  .theme-light {
+  html.theme-light {
     --color-nearblack: 250, 249, 246;      /* Soft alabaster white */
     --color-offwhite: 28, 27, 26;          /* Refined charcoal text */
     --color-gold: 184, 146, 48;            /* Luxury bronze gold */
@@ -45,7 +48,7 @@
   }
 
   /* Tech Minimal (Slate Theme) */
-  .theme-slate {
+  html.theme-slate {
     --color-nearblack: 15, 23, 42;         /* Midnight slate dark */
     --color-offwhite: 226, 232, 240;       /* Cool slate white text */
     --color-gold: 56, 189, 248;            /* High-tech cyan primary */
@@ -62,7 +65,7 @@
   }
 
   /* Aurora Matrix (Aurora Neon Theme) */
-  .theme-aurora {
+  html.theme-aurora {
     --color-nearblack: 5, 5, 10;           /* Cyber pitch black */
     --color-offwhite: 236, 239, 244;       /* Frost white text */
     --color-gold: 16, 185, 129;            /* Neon emerald accent */
@@ -78,17 +81,18 @@
     --theme-glow: 0 0 25px rgba(16, 185, 129, 0.2);
   }
 
+@layer base {
   html {
     scroll-behavior: smooth;
-    scrollbar-color: var(--color-gold) var(--color-nearblack);
+    scrollbar-color: rgb(var(--color-gold)) rgb(var(--color-nearblack));
     scrollbar-width: thin;
-    background-color: var(--color-nearblack);
+    background-color: rgb(var(--color-nearblack));
     transition: background-color 0.3s ease;
   }
 
   body {
-    color: var(--color-offwhite);
-    background-color: var(--color-nearblack);
+    color: rgb(var(--color-offwhite));
+    background-color: rgb(var(--color-nearblack));
     font-family: var(--font-dmsans), sans-serif;
     overflow-x: hidden;
     position: relative;
@@ -102,8 +106,8 @@
 
   /* Selection style */
   ::selection {
-    background-color: var(--color-gold);
-    color: var(--color-nearblack);
+    background-color: rgb(var(--color-gold));
+    color: rgb(var(--color-nearblack));
   }
 }
 

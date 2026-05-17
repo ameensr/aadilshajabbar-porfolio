@@ -55,6 +55,8 @@ const applyThemeClass = (newTheme: ThemeName) => {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
   
+  console.log("[ThemeSwitcher] Applying theme:", newTheme);
+  
   // Remove existing themes
   THEME_OPTIONS.forEach((option) => {
     root.classList.remove(`theme-${option.id}`);
@@ -62,6 +64,7 @@ const applyThemeClass = (newTheme: ThemeName) => {
   
   // Add new theme
   root.classList.add(`theme-${newTheme}`);
+  console.log("[ThemeSwitcher] Active classList:", root.classList.toString());
 };
 
 export default function ThemeSwitcher({ showText = false }: { showText?: boolean }) {
