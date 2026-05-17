@@ -9,6 +9,8 @@ export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
+  const basePath = process.env.NODE_ENV === "production" ? "/aadilshajabbar-portfolio" : "";
+
   const navItems = [
     { label: "Profile", id: "about" },
     { label: "Innovations", id: "innovations" },
@@ -119,7 +121,7 @@ export default function Navigation() {
           {/* Action Button: Download CV */}
           <div className="hidden sm:flex items-center gap-4">
             <a
-              href="/Aadil_Sha_Jabbar_CV.pdf"
+              href={`${basePath}/Aadil_Sha_Jabbar_CV.pdf`}
               download
               className="flex items-center gap-2 px-4 py-2.5 border border-gold/40 text-gold font-mono text-[10px] tracking-wider uppercase hover:border-gold hover:bg-gold hover:text-nearblack transition-all duration-300"
             >
@@ -167,7 +169,7 @@ export default function Navigation() {
 
             <div className="flex flex-col gap-4 items-center relative z-10">
               <a
-                href="/Aadil_Sha_Jabbar_CV.pdf"
+                href={`${basePath}/Aadil_Sha_Jabbar_CV.pdf`}
                 download
                 className="flex items-center justify-center gap-2 w-full max-w-xs px-6 py-3 border border-gold text-gold font-mono text-xs tracking-wider uppercase hover:bg-gold hover:text-nearblack transition-all duration-300"
               >

@@ -62,10 +62,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const basePath = process.env.NODE_ENV === 'production' ? '/aadilshajabbar-portfolio' : '';
+
   return (
     <html lang="en" className={`${playfair.variable} ${dmsans.variable} ${dmmono.variable} scroll-smooth`}>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href={`${basePath}/favicon.ico`} sizes="any" />
       </head>
       <body className="antialiased min-h-screen relative selection:bg-gold selection:text-nearblack bg-nearblack text-offwhite overflow-x-hidden">
         {/* Grain overlay for luxury editorial paper feel */}
