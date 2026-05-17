@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowDownToLine, Globe } from "lucide-react";
+import { getCvDownloadLink } from "@/config/portfolio";
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -135,8 +136,10 @@ export default function Navigation() {
           {/* Action Button: Download CV */}
           <div className="hidden sm:flex items-center gap-4">
             <a
-              href={`${basePath}/Aadil_Sha_Jabbar_CV.pdf`}
-              download
+              href={getCvDownloadLink(basePath)}
+              download="Aadil_Sha_Jabbar_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2.5 border border-gold/40 text-gold font-mono text-[10px] tracking-wider uppercase hover:border-gold hover:bg-gold hover:text-nearblack transition-all duration-300"
             >
               <ArrowDownToLine size={12} />
@@ -183,8 +186,10 @@ export default function Navigation() {
 
             <div className="flex flex-col gap-4 items-center relative z-10">
               <a
-                href={`${basePath}/Aadil_Sha_Jabbar_CV.pdf`}
-                download
+                href={getCvDownloadLink(basePath)}
+                download="Aadil_Sha_Jabbar_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full max-w-xs px-6 py-3 border border-gold text-gold font-mono text-xs tracking-wider uppercase hover:bg-gold hover:text-nearblack transition-all duration-300"
               >
                 <ArrowDownToLine size={14} />
