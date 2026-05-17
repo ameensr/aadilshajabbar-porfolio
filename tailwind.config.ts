@@ -1,5 +1,13 @@
 import type { Config } from "tailwindcss";
 
+const withOpacity = (variableName: string): any => {
+  return (({ opacityValue }: { opacityValue?: any }) => {
+    return opacityValue 
+      ? `rgba(var(${variableName}), ${opacityValue})` 
+      : `rgb(var(${variableName}))`;
+  }) as any;
+};
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,25 +18,25 @@ const config: Config = {
     extend: {
       colors: {
         navy: {
-          DEFAULT: "var(--color-navy)",
-          dark: "var(--color-navy-dark)",
+          DEFAULT: withOpacity("--color-navy"),
+          dark: withOpacity("--color-navy-dark"),
         },
-        nearblack: "var(--color-nearblack)",
+        nearblack: withOpacity("--color-nearblack"),
         gold: {
-          DEFAULT: "var(--color-gold)",
-          light: "var(--color-gold-light)",
-          dark: "var(--color-gold-dark)",
+          DEFAULT: withOpacity("--color-gold"),
+          light: withOpacity("--color-gold-light"),
+          dark: withOpacity("--color-gold-dark"),
         },
-        offwhite: "var(--color-offwhite)",
+        offwhite: withOpacity("--color-offwhite"),
         emerald: {
           DEFAULT: "#10B981",
           light: "#34D399",
           dark: "#059669",
         },
         luxegrey: {
-          DEFAULT: "var(--color-luxegrey)",
-          light: "var(--color-luxegrey-light)",
-          dark: "var(--color-luxegrey-dark)",
+          DEFAULT: withOpacity("--color-luxegrey"),
+          light: withOpacity("--color-luxegrey-light"),
+          dark: withOpacity("--color-luxegrey-dark"),
         }
       },
       fontFamily: {

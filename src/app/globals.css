@@ -12,16 +12,16 @@
 
   /* Deep Obsidian (Default Dark Theme) */
   :root, .theme-dark {
-    --color-nearblack: #0A0A0A;
-    --color-offwhite: #F5F2ED;
-    --color-gold: #C9A84C;
-    --color-gold-light: #DFCA85;
-    --color-gold-dark: #9E7E32;
-    --color-navy: #0D2137;
-    --color-navy-dark: #081625;
-    --color-luxegrey: #2A2A2A;
-    --color-luxegrey-light: #3E3E3E;
-    --color-luxegrey-dark: #1A1A1A;
+    --color-nearblack: 10, 10, 10;
+    --color-offwhite: 245, 242, 237;
+    --color-gold: 201, 168, 76;
+    --color-gold-light: 223, 202, 133;
+    --color-gold-dark: 158, 126, 50;
+    --color-navy: 13, 33, 55;
+    --color-navy-dark: 8, 22, 37;
+    --color-luxegrey: 42, 42, 42;
+    --color-luxegrey-light: 62, 62, 62;
+    --color-luxegrey-dark: 26, 26, 26;
     
     --theme-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     --theme-glow: 0 0 20px rgba(201, 168, 76, 0.15);
@@ -29,16 +29,16 @@
 
   /* Warm Luxury (Light Theme) */
   .theme-light {
-    --color-nearblack: #FAF9F6;      /* Soft alabaster white */
-    --color-offwhite: #1C1B1A;       /* Refined charcoal text */
-    --color-gold: #B89230;           /* Luxury bronze gold */
-    --color-gold-light: #D4AF37;     /* Bright gold accent */
-    --color-gold-dark: #8C6D1F;      /* Deep dark bronze */
-    --color-navy: #F3ECE0;           /* Warm light cream container */
-    --color-navy-dark: #EAE2D5;      /* Secondary warm cream block */
-    --color-luxegrey: #E1DACB;       /* Warm light grey border */
-    --color-luxegrey-light: #EFEBE1; /* Parchment cream highlight */
-    --color-luxegrey-dark: #D4CBB8;  /* Deep clay grey border */
+    --color-nearblack: 250, 249, 246;      /* Soft alabaster white */
+    --color-offwhite: 28, 27, 26;          /* Refined charcoal text */
+    --color-gold: 184, 146, 48;            /* Luxury bronze gold */
+    --color-gold-light: 212, 175, 55;      /* Bright gold accent */
+    --color-gold-dark: 140, 109, 31;       /* Deep dark bronze */
+    --color-navy: 243, 236, 224;           /* Warm light cream container */
+    --color-navy-dark: 234, 226, 213;      /* Secondary warm cream block */
+    --color-luxegrey: 225, 218, 203;       /* Warm light grey border */
+    --color-luxegrey-light: 239, 235, 225;  /* Parchment cream highlight */
+    --color-luxegrey-dark: 212, 203, 184;   /* Deep clay grey border */
     
     --theme-shadow: 0 10px 40px rgba(184, 146, 48, 0.08);
     --theme-glow: 0 0 20px rgba(184, 146, 48, 0.1);
@@ -46,16 +46,16 @@
 
   /* Tech Minimal (Slate Theme) */
   .theme-slate {
-    --color-nearblack: #0F172A;      /* Midnight slate dark */
-    --color-offwhite: #E2E8F0;       /* Cool slate white text */
-    --color-gold: #38BDF8;           /* High-tech cyan primary */
-    --color-gold-light: #7DD3FC;     /* Soft sky blue */
-    --color-gold-dark: #0284C7;      /* Sky blue dark */
-    --color-navy: #1E293B;           /* Sleek slate container */
-    --color-navy-dark: #0F172A;      /* Midnight slate background */
-    --color-luxegrey: #334155;       /* Slate grey */
-    --color-luxegrey-light: #475569; /* Slate grey light */
-    --color-luxegrey-dark: #1E293B;  /* Slate grey border dark */
+    --color-nearblack: 15, 23, 42;         /* Midnight slate dark */
+    --color-offwhite: 226, 232, 240;       /* Cool slate white text */
+    --color-gold: 56, 189, 248;            /* High-tech cyan primary */
+    --color-gold-light: 125, 211, 252;     /* Soft sky blue */
+    --color-gold-dark: 2, 132, 199;        /* Sky blue dark */
+    --color-navy: 30, 41, 59;              /* Sleek slate container */
+    --color-navy-dark: 15, 23, 42;         /* Midnight slate background */
+    --color-luxegrey: 51, 65, 85;          /* Slate grey */
+    --color-luxegrey-light: 71, 85, 105;   /* Slate grey light */
+    --color-luxegrey-dark: 30, 41, 59;     /* Slate grey border dark */
     
     --theme-shadow: 0 10px 40px rgba(56, 189, 248, 0.06);
     --theme-glow: 0 0 20px rgba(56, 189, 248, 0.1);
@@ -63,16 +63,16 @@
 
   /* Aurora Matrix (Aurora Neon Theme) */
   .theme-aurora {
-    --color-nearblack: #05050A;      /* Cyber pitch black */
-    --color-offwhite: #ECEFF4;       /* Frost white text */
-    --color-gold: #10B981;           /* Neon emerald accent */
-    --color-gold-light: #34D399;     /* Vibrant cyber mint */
-    --color-gold-dark: #059669;      /* Forest bio-green */
-    --color-navy: #0B192C;           /* Digital navy container */
-    --color-navy-dark: #060E18;      /* Deep grid core backdrop */
-    --color-luxegrey: #1F2937;       /* Cyber grey */
-    --color-luxegrey-light: #374151; /* Grid line grey */
-    --color-luxegrey-dark: #111827;  /* Cyber border black */
+    --color-nearblack: 5, 5, 10;           /* Cyber pitch black */
+    --color-offwhite: 236, 239, 244;       /* Frost white text */
+    --color-gold: 16, 185, 129;            /* Neon emerald accent */
+    --color-gold-light: 52, 211, 153;      /* Vibrant cyber mint */
+    --color-gold-dark: 5, 150, 105;        /* Forest bio-green */
+    --color-navy: 11, 25, 44;              /* Digital navy container */
+    --color-navy-dark: 6, 14, 24;          /* Deep grid core backdrop */
+    --color-luxegrey: 31, 41, 55;          /* Cyber grey */
+    --color-luxegrey-light: 55, 65, 81;    /* Grid line grey */
+    --color-luxegrey-dark: 17, 24, 39;     /* Cyber border black */
     
     --theme-shadow: 0 10px 40px rgba(16, 185, 129, 0.08);
     --theme-glow: 0 0 25px rgba(16, 185, 129, 0.2);

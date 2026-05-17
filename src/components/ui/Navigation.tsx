@@ -189,7 +189,7 @@ export default function Navigation() {
             <div className="flex flex-col gap-6 items-center w-full max-w-xs relative z-10">
               <div className="flex flex-col gap-2 items-center w-full">
                 <span className="font-mono text-[8px] text-offwhite/40 uppercase tracking-[0.15em]">Select System Theme</span>
-                <ThemeSwitcher />
+                <ThemeSwitcher showText={true} />
               </div>
               
               <a

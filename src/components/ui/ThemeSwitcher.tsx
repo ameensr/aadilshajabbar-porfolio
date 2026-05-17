@@ -64,7 +64,7 @@ const applyThemeClass = (newTheme: ThemeName) => {
   root.classList.add(`theme-${newTheme}`);
 };
 
-export default function ThemeSwitcher() {
+export default function ThemeSwitcher({ showText = false }: { showText?: boolean }) {
   const [activeTheme, setActiveTheme] = useState<ThemeName>("dark");
   const [mounted, setMounted] = useState(false);
 
@@ -152,7 +152,7 @@ export default function ThemeSwitcher() {
             )}
             
             <Icon size={10} className={isActive ? "text-nearblack" : theme.colorClass} />
-            <span className="hidden md:inline">{theme.shortName}</span>
+            {showText && <span className="hidden md:inline">{theme.shortName}</span>}
           </button>
         );
       })}
