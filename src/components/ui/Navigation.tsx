@@ -94,21 +94,24 @@ export default function Navigation() {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="flex items-center gap-2 group cursor-pointer"
+            className="flex items-center gap-2.5 group cursor-pointer"
           >
-            <div className="w-9 h-9 border border-gold rounded-full flex items-center justify-center bg-gold/5 group-hover:bg-gold transition-all duration-300">
-              <span className="font-serif text-sm font-bold tracking-widest text-gold group-hover:text-nearblack transition-colors duration-300 italic">
-                ASJ
-              </span>
+            {/* Circular Avatar Type Logo */}
+            <div className="w-8 h-8 rounded-full border border-gold/30 flex items-center justify-center bg-gradient-to-br from-gold/15 to-navy/10 group-hover:border-gold/60 transition-all duration-300 overflow-hidden relative shadow-[0_0_10px_rgba(201,168,76,0.05)]">
+              <svg 
+                className="w-5 h-5 text-gold group-hover:text-gold-light transition-colors duration-300" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="1.5" 
+                viewBox="0 0 24 24" 
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
             </div>
-            <div className="flex flex-col">
-              <span className="font-serif text-xs font-black tracking-widest uppercase text-offwhite group-hover:text-gold transition-colors duration-300">
-                Aadil Sha
-              </span>
-              <span className="font-mono text-[8px] tracking-[0.25em] text-offwhite/40 uppercase leading-none">
-                Innovator
-              </span>
-            </div>
+            <span className="font-serif text-xs font-black tracking-widest uppercase text-offwhite group-hover:text-gold transition-colors duration-300">
+              Aadil Sha Jabbar
+            </span>
           </a>
 
           {/* Desktop Navigation Links */}
