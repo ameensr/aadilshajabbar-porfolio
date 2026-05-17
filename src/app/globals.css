@@ -10,25 +10,100 @@
     --color-text: 245, 242, 237;
   }
 
+  /* Deep Obsidian (Default Dark Theme) */
+  :root, .theme-dark {
+    --color-nearblack: #0A0A0A;
+    --color-offwhite: #F5F2ED;
+    --color-gold: #C9A84C;
+    --color-gold-light: #DFCA85;
+    --color-gold-dark: #9E7E32;
+    --color-navy: #0D2137;
+    --color-navy-dark: #081625;
+    --color-luxegrey: #2A2A2A;
+    --color-luxegrey-light: #3E3E3E;
+    --color-luxegrey-dark: #1A1A1A;
+    
+    --theme-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    --theme-glow: 0 0 20px rgba(201, 168, 76, 0.15);
+  }
+
+  /* Warm Luxury (Light Theme) */
+  .theme-light {
+    --color-nearblack: #FAF9F6;      /* Soft alabaster white */
+    --color-offwhite: #1C1B1A;       /* Refined charcoal text */
+    --color-gold: #B89230;           /* Luxury bronze gold */
+    --color-gold-light: #D4AF37;     /* Bright gold accent */
+    --color-gold-dark: #8C6D1F;      /* Deep dark bronze */
+    --color-navy: #F3ECE0;           /* Warm light cream container */
+    --color-navy-dark: #EAE2D5;      /* Secondary warm cream block */
+    --color-luxegrey: #E1DACB;       /* Warm light grey border */
+    --color-luxegrey-light: #EFEBE1; /* Parchment cream highlight */
+    --color-luxegrey-dark: #D4CBB8;  /* Deep clay grey border */
+    
+    --theme-shadow: 0 10px 40px rgba(184, 146, 48, 0.08);
+    --theme-glow: 0 0 20px rgba(184, 146, 48, 0.1);
+  }
+
+  /* Tech Minimal (Slate Theme) */
+  .theme-slate {
+    --color-nearblack: #0F172A;      /* Midnight slate dark */
+    --color-offwhite: #E2E8F0;       /* Cool slate white text */
+    --color-gold: #38BDF8;           /* High-tech cyan primary */
+    --color-gold-light: #7DD3FC;     /* Soft sky blue */
+    --color-gold-dark: #0284C7;      /* Sky blue dark */
+    --color-navy: #1E293B;           /* Sleek slate container */
+    --color-navy-dark: #0F172A;      /* Midnight slate background */
+    --color-luxegrey: #334155;       /* Slate grey */
+    --color-luxegrey-light: #475569; /* Slate grey light */
+    --color-luxegrey-dark: #1E293B;  /* Slate grey border dark */
+    
+    --theme-shadow: 0 10px 40px rgba(56, 189, 248, 0.06);
+    --theme-glow: 0 0 20px rgba(56, 189, 248, 0.1);
+  }
+
+  /* Aurora Matrix (Aurora Neon Theme) */
+  .theme-aurora {
+    --color-nearblack: #05050A;      /* Cyber pitch black */
+    --color-offwhite: #ECEFF4;       /* Frost white text */
+    --color-gold: #10B981;           /* Neon emerald accent */
+    --color-gold-light: #34D399;     /* Vibrant cyber mint */
+    --color-gold-dark: #059669;      /* Forest bio-green */
+    --color-navy: #0B192C;           /* Digital navy container */
+    --color-navy-dark: #060E18;      /* Deep grid core backdrop */
+    --color-luxegrey: #1F2937;       /* Cyber grey */
+    --color-luxegrey-light: #374151; /* Grid line grey */
+    --color-luxegrey-dark: #111827;  /* Cyber border black */
+    
+    --theme-shadow: 0 10px 40px rgba(16, 185, 129, 0.08);
+    --theme-glow: 0 0 25px rgba(16, 185, 129, 0.2);
+  }
+
   html {
     scroll-behavior: smooth;
-    scrollbar-color: #C9A84C #0A0A0A;
+    scrollbar-color: var(--color-gold) var(--color-nearblack);
     scrollbar-width: thin;
-    background-color: #0A0A0A;
+    background-color: var(--color-nearblack);
+    transition: background-color 0.3s ease;
   }
 
   body {
-    color: #F5F2ED;
-    background-color: #0A0A0A;
+    color: var(--color-offwhite);
+    background-color: var(--color-nearblack);
     font-family: var(--font-dmsans), sans-serif;
     overflow-x: hidden;
     position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Smooth transition for theme colors on interactive elements */
+  header, footer, nav, a, button, section, div, p, span, h1, h2, h3, h4, h5, h6, select, input, textarea {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, text-decoration-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   /* Selection style */
   ::selection {
-    background-color: #C9A84C;
-    color: #0A0A0A;
+    background-color: var(--color-gold);
+    color: var(--color-nearblack);
   }
 }
 

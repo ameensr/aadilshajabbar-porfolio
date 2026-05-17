@@ -68,6 +68,18 @@ export default function RootLayout({
     <html lang="en" className={`${playfair.variable} ${dmsans.variable} ${dmmono.variable} scroll-smooth`}>
       <head>
         <link rel="icon" href={`${basePath}/favicon.ico`} sizes="any" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var savedTheme = localStorage.getItem('theme') || 'dark';
+                  document.documentElement.classList.add('theme-' + savedTheme);
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
       </head>
       <body className="antialiased min-h-screen relative selection:bg-gold selection:text-nearblack bg-nearblack text-offwhite overflow-x-hidden">
         {/* Grain overlay for luxury editorial paper feel */}

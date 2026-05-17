@@ -10,25 +10,25 @@ const config: Config = {
     extend: {
       colors: {
         navy: {
-          DEFAULT: "#0D2137",
-          dark: "#081625",
+          DEFAULT: "var(--color-navy)",
+          dark: "var(--color-navy-dark)",
         },
-        nearblack: "#0A0A0A",
+        nearblack: "var(--color-nearblack)",
         gold: {
-          DEFAULT: "#C9A84C",
-          light: "#DFCA85",
-          dark: "#9E7E32",
+          DEFAULT: "var(--color-gold)",
+          light: "var(--color-gold-light)",
+          dark: "var(--color-gold-dark)",
         },
-        offwhite: "#F5F2ED",
+        offwhite: "var(--color-offwhite)",
         emerald: {
           DEFAULT: "#10B981",
           light: "#34D399",
           dark: "#059669",
         },
         luxegrey: {
-          DEFAULT: "#2A2A2A",
-          light: "#3E3E3E",
-          dark: "#1A1A1A",
+          DEFAULT: "var(--color-luxegrey)",
+          light: "var(--color-luxegrey-light)",
+          dark: "var(--color-luxegrey-dark)",
         }
       },
       fontFamily: {

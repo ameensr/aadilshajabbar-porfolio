@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowDownToLine, Globe } from "lucide-react";
 import { getCvDownloadLink } from "@/config/portfolio";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -133,8 +134,9 @@ export default function Navigation() {
             ))}
           </nav>
 
-          {/* Action Button: Download CV */}
+          {/* Action Button: Dynamic Theme Switcher & Download CV */}
           <div className="hidden sm:flex items-center gap-4">
+            <ThemeSwitcher />
             <a
               href={getCvDownloadLink(basePath)}
               download="Aadil_Sha_Jabbar_CV.pdf"
@@ -184,13 +186,18 @@ export default function Navigation() {
               ))}
             </nav>
 
-            <div className="flex flex-col gap-4 items-center relative z-10">
+            <div className="flex flex-col gap-6 items-center w-full max-w-xs relative z-10">
+              <div className="flex flex-col gap-2 items-center w-full">
+                <span className="font-mono text-[8px] text-offwhite/40 uppercase tracking-[0.15em]">Select System Theme</span>
+                <ThemeSwitcher />
+              </div>
+              
               <a
                 href={getCvDownloadLink(basePath)}
                 download="Aadil_Sha_Jabbar_CV.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full max-w-xs px-6 py-3 border border-gold text-gold font-mono text-xs tracking-wider uppercase hover:bg-gold hover:text-nearblack transition-all duration-300"
+                className="flex items-center justify-center gap-2 w-full px-6 py-3 border border-gold text-gold font-mono text-xs tracking-wider uppercase hover:bg-gold hover:text-nearblack transition-all duration-300"
               >
                 <ArrowDownToLine size={14} />
                 Download CV
